@@ -5,6 +5,7 @@ const MeetingCostTimer = () => {
   const [cost, setCost] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [startTime, setStartTime] = useState(null);
+  const [totalElapsed, setTotalElapsed] = useState(0); // Track total elapsed time
 
   // AU$86.03 per hour per person
   const HOURLY_RATE = 86.03;
@@ -15,15 +16,16 @@ const MeetingCostTimer = () => {
     if (isRunning && startTime) {
       interval = setInterval(() => {
         const now = Date.now();
-        const elapsedSeconds = (now - startTime) / 1000;
-        const currentCost = elapsedSeconds * COST_PER_SECOND * people;
+        const currentSessionElapsed = (now - startTime) / 1000;
+        const totalElapsedSeconds = totalElapsed + currentSessionElapsed;
+        const currentCost = totalElapsedSeconds * COST_PER_SECOND * people;
         setCost(currentCost);
       }, 100); // Update every 100ms for smooth counting
     } else if (!isRunning) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isRunning, startTime, people]);
+  }, [isRunning, startTime, people, totalElapsed]);
 
   const startTimer = () => {
     setStartTime(Date.now());
@@ -31,13 +33,20 @@ const MeetingCostTimer = () => {
   };
 
   const pauseTimer = () => {
+    if (isRunning && startTime) {
+      // Save the elapsed time when pausing
+      const currentSessionElapsed = (Date.now() - startTime) / 1000;
+      setTotalElapsed(totalElapsed + currentSessionElapsed);
+    }
     setIsRunning(false);
+    setStartTime(null);
   };
 
   const resetTimer = () => {
     setIsRunning(false);
     setCost(0);
     setStartTime(null);
+    setTotalElapsed(0); // Reset total elapsed time
   };
 
   const formatCost = (cost) => {
@@ -55,11 +64,11 @@ const MeetingCostTimer = () => {
     <div className="timer-container">
       {/* Main Cost Display */}
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <div className="cost-display">
-          {formatCost(cost)}
-        </div>
         <div className="cost-label">
           Meeting Cost
+        </div>
+        <div className="cost-display">
+          {formatCost(cost)}
         </div>
       </div>
 
