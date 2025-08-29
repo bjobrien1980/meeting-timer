@@ -5,14 +5,14 @@ A real-time meeting cost calculator that shows the ongoing cost of meetings base
 ## Features
 
 - Real-time cost calculation
-- Adjustable number of meeting participants
+- Adjustable number of meeting participants  
 - Clean, professional interface with large display numbers
 - Timer controls (Start, Pause, Reset)
 - Responsive design
 
 ## Live Demo
 
-Visit: [https://bjobrien1980.github.io/meeting-timer](https://bjobrien1980.github.io/meeting-timer)
+Visit: [https://meeting-timer-nine.vercel.app](https://meeting-timer-nine.vercel.app)
 
 ## Local Development
 
@@ -34,18 +34,9 @@ Visit: [https://bjobrien1980.github.io/meeting-timer](https://bjobrien1980.githu
 
 4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Deployment
-
-To deploy to GitHub Pages:
-
-```bash
-npm run deploy
-```
-
-This will build the app and push it to the `gh-pages` branch.
-
 ## Built With
 
 - React
 - Tailwind CSS
-- GitHub Pages
+- CRACO (for Tailwind integration)
+- Vercel (hosting)
