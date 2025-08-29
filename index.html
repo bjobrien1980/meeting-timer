@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Cost Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center p-8">
+        <!-- Main Cost Display -->
+        <div class="text-center mb-12">
+            <div id="cost-display" class="text-8xl md:text-9xl font-mono font-bold text-white mb-4">
+                AU$0.00
+            </div>
+            <div class="text-xl text-gray-300">
+                Meeting Cost
+            </div>
+        </div>
+
+        <!-- People Counter -->
+        <div class="flex items-center gap-6 mb-12">
+            <button id="decrease-btn" class="w-16 h-16 rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl font-bold transition-colors">
+                −
+            </button>
+            
+            <div class="text-center">
+                <div id="people-count" class="text-4xl font-bold text-white mb-1">
+                    5
+                </div>
+                <div id="people-label" class="text-sm text-gray-400">
+                    people
+                </div>
+            </div>
+
+            <button id="increase-btn" class="w-16 h-16 rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl font-bold transition-colors">
+                +
+            </button>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex gap-4">
+            <button id="start-btn" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-semibold transition-colors">
+                Start Meeting
+            </button>
+            <button id="pause-btn" class="px-8 py-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-lg font-semibold transition-colors hidden">
+                Pause
+            </button>
+            <button id="reset-btn" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg text-lg font-semibold transition-colors">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Meeting timer logic
+        let people = 5;
+        let cost = 0;
+        let isRunning = false;
+        let startTime = null;
+        let interval = null;
+        
+        // AU$86.03 per hour per person
+        const HOURLY_RATE = 86.03;
+        const COST_PER_SECOND = HOURLY_RATE / 3600;
+
+        // DOM elements
+        const costDisplay = document.getElementById('cost-display');
+        const peopleCount = document.getElementById('people-count');
+        const peopleLabel = document.getElementById('people-label');
+        const decreaseBtn = document.getElementById('decrease-btn');
+        const increaseBtn = document.getElementById('increase-btn');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        function formatCost(cost) {
+            return `AU$${cost.toFixed(2)}`;
+        }
+
+        function updateDisplay() {
+            costDisplay.textContent = formatCost(cost);
+            peopleCount.textContent = people;
+            peopleLabel.textContent = people === 1 ? 'person' : 'people';
+            decreaseBtn.disabled = people <= 1;
+            increaseBtn.disabled = people >= 100;
+        }
+
+        function updateCost() {
+            if (isRunning && startTime) {
+                const now = Date.now();
+                const elapsedSeconds = (now - startTime) / 1000;
+                cost = elapsedSeconds * COST_PER_SECOND * people;
+                updateDisplay();
+            }
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            isRunning = true;
+            startBtn.classList.add('hidden');
+            pauseBtn.classList.remove('hidden');
+            interval = setInterval(updateCost, 100);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(interval);
+            startBtn.classList.remove('hidden');
+            pauseBtn.classList.add('hidden');
+        }
+
+        function resetTimer() {
+            isRunning = false;
+            cost = 0;
+            startTime = null;
+            clearInterval(interval);
+            startBtn.classList.remove('hidden');
+            pauseBtn.classList.add('hidden');
+            updateDisplay();
+        }
+
+        function adjustPeople(delta) {
+            const newCount = people + delta;
+            if (newCount >= 1 && newCount <= 100) {
+                people = newCount;
+                updateDisplay();
+            }
+        }
+
+        // Event listeners
+        decreaseBtn.addEventListener('click', () => adjustPeople(-1));
+        increaseBtn.addEventListener('click', () => adjustPeople(1));
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
