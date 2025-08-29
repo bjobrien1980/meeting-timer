@@ -52,39 +52,39 @@ const MeetingCostTimer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8">
+    <div className="timer-container">
       {/* Main Cost Display */}
-      <div className="text-center mb-12">
-        <div className="text-8xl md:text-9xl font-mono font-bold text-white mb-4">
+      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <div className="cost-display">
           {formatCost(cost)}
         </div>
-        <div className="text-xl text-gray-300">
+        <div className="cost-label">
           Meeting Cost
         </div>
       </div>
 
       {/* People Counter */}
-      <div className="flex items-center gap-6 mb-12">
+      <div className="people-counter">
         <button
           onClick={() => adjustPeople(-1)}
-          className="w-16 h-16 rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl font-bold transition-colors"
+          className="people-button"
           disabled={people <= 1}
         >
           −
         </button>
         
-        <div className="text-center">
-          <div className="text-4xl font-bold text-white mb-1">
+        <div style={{ textAlign: 'center' }}>
+          <div className="people-count">
             {people}
           </div>
-          <div className="text-sm text-gray-400">
+          <div className="people-label">
             {people === 1 ? 'person' : 'people'}
           </div>
         </div>
 
         <button
           onClick={() => adjustPeople(1)}
-          className="w-16 h-16 rounded-full bg-gray-800 hover:bg-gray-700 text-white text-2xl font-bold transition-colors"
+          className="people-button"
           disabled={people >= 100}
         >
           +
@@ -92,18 +92,18 @@ const MeetingCostTimer = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex gap-4">
+      <div className="controls">
         {!isRunning ? (
           <button
             onClick={startTimer}
-            className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-semibold transition-colors"
+            className="control-button start-button"
           >
             Start Meeting
           </button>
         ) : (
           <button
             onClick={pauseTimer}
-            className="px-8 py-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-lg font-semibold transition-colors"
+            className="control-button pause-button"
           >
             Pause
           </button>
@@ -111,7 +111,7 @@ const MeetingCostTimer = () => {
         
         <button
           onClick={resetTimer}
-          className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg text-lg font-semibold transition-colors"
+          className="control-button reset-button"
         >
           Reset
         </button>
