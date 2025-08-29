@@ -22,12 +22,18 @@ body {
   padding: 2rem;
 }
 
+.cost-label {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 .cost-display {
   font-size: 6rem;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-weight: bold;
   color: #ffffff;
-  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -35,12 +41,6 @@ body {
   .cost-display {
     font-size: 8rem;
   }
-}
-
-.cost-label {
-  font-size: 1.25rem;
-  color: #d1d5db;
-  margin-bottom: 3rem;
 }
 
 .people-counter {
@@ -102,12 +102,12 @@ body {
 }
 
 .start-button {
-  background-color: #dc2626;
+  background-color: #16a34a;
   color: #ffffff;
 }
 
 .start-button:hover {
-  background-color: #b91c1c;
+  background-color: #15803d;
 }
 
 .pause-button {
