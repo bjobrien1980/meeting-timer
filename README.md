@@ -9,6 +9,7 @@ A real-time meeting cost calculator that shows the ongoing cost of meetings base
 - Clean, professional interface with large display numbers
 - Timer controls (Start, Pause, Reset)
 - Responsive design
+- Black background with white text for professional presentation
 
 ## Live Demo
 
@@ -37,6 +38,6 @@ Visit: [https://meeting-timer-nine.vercel.app](https://meeting-timer-nine.vercel
 ## Built With
 
 - React
-- Tailwind CSS
-- CRACO (for Tailwind integration)
+- Custom CSS styling
+- CRACO (for build process)
 - Vercel (hosting)
